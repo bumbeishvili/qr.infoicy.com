@@ -1,0 +1,157 @@
+<!-- Google tag (gtag.js) -->
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BPC62S5T34"></script>
+<script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.0.0/dist/mindar-image.prod.js"></script>
+<script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.0.0/dist/mindar-image-aframe.prod.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
+
+<script src="./Scripts/gestures.js"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+
+    gtag('config', 'G-BPC62S5T34');
+</script>
+
+<div id="augmentReality">
+
+    <link href="style.css">
+
+    <body id="body">
+
+    </body>
+
+
+</div>
+
+
+Redirecting...
+<script>
+    var idMapLink = {
+
+        "4": "",
+        "3": "",
+        "2": "",
+        "1": "",
+    }
+
+    const aReal = document.getElementById('augmentReality')
+    const id = getQueryVariable('id');
+    const link = idMapLink[id];
+
+    const glbs = {
+        "glaciers": `<a-asset-item id="glaciers" src="./Assets/glb/glaciers.glb"></a-asset-item>`,
+        "london": `  <a-asset-item id="london" src="./Assets/glb/london.glb"></a-asset-item>`, 
+        "newyork": `  <a-asset-item id="london" src="./Assets/glb/newyork.glb"></a-asset-item>`, 
+        "town": `  <a-asset-item id="london" src="./Assets/glb/town.glb"></a-asset-item>`, 
+
+    }
+
+    const linkscalesoverride = {
+        "glaciers": ``,
+        "london": ` `, 
+        "newyork": ` `, 
+        "town": ` `, 
+    }
+
+    const linksposoverride = {
+        "glaciers": ` `,
+        "london": ` `, 
+        "newyork": ` `, 
+        "town": ` `, 
+    }
+
+    const AugmentReality = `  
+
+     <a-scene mindar-image="imageTargetSrc: ./${link}.mind; uiError:no; uiLoading:no; uiScanning:no; "
+            vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false" color-space="sRGB"
+            renderer="colorManagement: true, physicallyCorrectLights"
+            gltf-model="dracoDecoderPath: https://www.gstatic.com/draco/versioned/decoders/1.5.6/" gesture-detector>
+            <a-camera look-controls="enabled: false" cursor="fuse: false; rayOrigin: mouse;"
+                raycaster="far: 10000; objects: .clickable"></a-camera>
+
+                <a-entity id="example-target" mindar-image-target="targetIndex: 0">  
+                    <a-entity id="${link}" gltf-model="#${link}" position="0 -0.5 0" rotation="-10 0 0 " scale="0.01 0.01 0.01"
+                ></a-entity>
+
+
+
+        </a-scene> `
+
+    if (link) {
+
+        if (id == 'georgia') {
+            aReal.removeAttribute("hidden")
+            aReality()
+        } else {
+            window.location.href = link;
+        }
+
+    } else {
+        //  window.location.href = "https://www.youtube.com/channel/UCKc6h69gdgFiPoRRlr40dmg";
+    }
+
+    function getQueryVariable(variable) {
+        var query = window.location.search.substring(1);
+        var vars = query.split('&');
+        for (var i = 0; i < vars.length; i++) {
+            var pair = vars[i].split('=');
+            if (decodeURIComponent(pair[0]) == variable) {
+                return decodeURIComponent(pair[1]);
+            }
+        }
+        // console.log('Query variable %s not found', variable);
+    }
+
+    function aReality() {
+
+        AFRAME.registerComponent("set-metalness-roughness", {
+            init: function () {
+                this.el.addEventListener("model-loaded", e => {
+                    let mesh = this.el.getObject3D("mesh")
+                    mesh.traverse(node => {
+                        if (!node.material) return;
+                        node.material.metalness = 0.8
+                        node.material.roughness = 0.2
+                    })
+                })
+            }
+        })
+
+        // document.getElementById('playbtn').addEventListener('click', (e) => {
+        //   document.getElementById('playbtn').setAttribute('visible', false);
+        //   document.getElementById('vid').play();
+        // })
+
+        const carouselPlane = document.getElementById("carousel");
+        const exampleTarget = document.querySelector('#example-target');
+        exampleTarget.addEventListener("targetFound", event => {
+            console.log("target found");
+        });
+
+
+
+        // detect target lost
+        exampleTarget.addEventListener("targetLost", event => {
+            console.log("target lost");
+        });
+
+        const youtubeBtn = document.querySelector('#youtubebtn');
+        youtubeBtn.addEventListener("click", event => {
+            window.location.href = "https://www.youtube.com/@streetviewgeorgia";
+        });
+
+
+
+    }
+
+    document.querySelector('#body').innerHTML = AugmentReality
+    
+
+
+</script>
