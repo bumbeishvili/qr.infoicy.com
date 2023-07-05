@@ -45,25 +45,18 @@ Redirecting...
     const link = idMapLink[id];
 
     const glbs = {
-        "glaciers": `<a-asset-item id="glaciers" src="./Assets/glb/glaciers.glb"></a-asset-item>`,
-        "london": `  <a-asset-item id="london" src="./Assets/glb/london.glb"></a-asset-item>`, 
-        "newyork": `  <a-asset-item id="london" src="./Assets/glb/newyork.glb"></a-asset-item>`, 
-        "town": `  <a-asset-item id="london" src="./Assets/glb/town.glb"></a-asset-item>`, 
+        "glaciers": `<a-asset-item id="glaciers" src="./Assets/glb/glaciers.glb"></a-asset-item>
+                   <a-entity id="glaciers" gltf-model="#glaciers" position="0 0 0" rotation="0 0 0 " scale="0.01 0.01 0.01" `,
 
-    }
+        "london": `<a-asset-item id="london" src="./Assets/glb/london.glb"></a-asset-item>
+                   <a-entity id="london" gltf-model="#london" position="-9.2 -1.5 0" rotation="0 0 0 " scale="1 1 1"`,
 
-    const linkscalesoverride = {
-        "glaciers": ``,
-        "london": ` `, 
-        "newyork": ` `, 
-        "town": ` `, 
-    }
+        "newyork": `  <a-asset-item id="newyork" src="./Assets/glb/newyork.glb"></a-asset-item>
+                    <a-entity id="newyork" gltf-model="#newyork" position="0 0 0" rotation="90 0 0 " scale="0.01 0.01 0.01"`,
 
-    const linksposoverride = {
-        "glaciers": ` `,
-        "london": ` `, 
-        "newyork": ` `, 
-        "town": ` `, 
+        "town": `  <a-asset-item id="town" src="./Assets/glb/town.glb"></a-asset-item> 
+                   <a-entity id="town" gltf-model="#town" position="0 0 0" rotation="0 0 0 " scale="0.6 0.6 0.6"`,
+
     }
 
 
@@ -78,7 +71,7 @@ Redirecting...
                 raycaster="far: 10000; objects: .clickable"></a-camera>
 
                 <a-entity id="example-target" mindar-image-target="targetIndex: 0">  
-                    <a-entity id="${id}" gltf-model="#${id}" position="0 -0.5 0" rotation="-10 0 0 " scale="0.01 0.01 0.01"
+                    ${glbs[id]}
                 ></a-entity>
 
 
@@ -152,8 +145,7 @@ Redirecting...
 
     }
 
+    console.log(AugmentReality)
+
     document.querySelector('#body').innerHTML = AugmentReality
-    
-
-
 </script>
